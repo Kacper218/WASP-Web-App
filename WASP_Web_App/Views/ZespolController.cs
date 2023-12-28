@@ -21,6 +21,7 @@ namespace WASP_Web_App.Views
         // GET: Zespol
         public async Task<IActionResult> Index()
         {
+            Console.WriteLine("zespolControler");
             return View(await _context.ProgramowanieZespolowe.ToListAsync());
         }
 

@@ -11,29 +11,15 @@
 <body>
     <h1>Weather Forecast</h1>
     <div id="weatherData"></div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: 'https://localhost:7110/weatherforecast/', // Replace with your endpoint URL
-                type: 'GET',
-                success: function(data) {
-                    displayWeather(data);
-                },
-                error: function() {
-                    $('#weatherData').text('Error fetching weather data.');
-                }
-            });
-        });
-
-        function displayWeather(data) {
-            // Parse the JSON data received from the API
-            var weather = JSON.parse(data);
-
-            // Display the weather data in the weatherData div
-            $('#weatherData').html('<pre>' + JSON.stringify(weather, null, 2) + '</pre>');
+    <div>
+    @if (ViewData["WeatherData"] != null)
+    {
+            <h1>@ViewData["WeatherData"]</h1>
         }
-    </script>
+        else
+        {
+            <h1>Brak pogody</h1>
+        }
+    </div>
 </body>
 </html>

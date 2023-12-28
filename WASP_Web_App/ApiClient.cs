@@ -9,23 +9,31 @@ public class ApiClient
     public ApiClient()
     {
         _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri("http://localhost:7110"); // Replace with your API base URL
+        _httpClient.BaseAddress = new Uri("https://localhost:7110"); // Replace with your API base URL
     }
 
     public async Task<string> GetWeatherForecastAsync()
     {
-        HttpResponseMessage response = await _httpClient.GetAsync("/weatherforecast");
+        try
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync("/WeatherForecast");
 
-        if (response.IsSuccessStatusCode)
-        {
-            string responseBody = await response.Content.ReadAsStringAsync();
-            // Process the response data here or return it to the caller
-            return responseBody;
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                // Process the response data here or return it to the caller
+                return responseBody;
+            }
+            else
+            {
+                // Handle error scenario
+                return "Error occurred while fetching weather data.";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            // Handle error scenario
-            return "Error occurred while fetching weather data.";
+            Console.WriteLine(ex);
+            return "Blad podczas Pobierania API";
         }
     }
 }
