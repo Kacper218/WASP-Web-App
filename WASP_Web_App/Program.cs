@@ -12,6 +12,8 @@ builder.Services.AddMvc();
 builder.Services.AddDbContext<DBContext>(options =>
         options.UseNpgsql("Host=cornelius.db.elephantsql.com;Port=5432;Database=hxsnsuxz;User Id=hxsnsuxz;Password=c1h7Y_Iw2lZNbolvfZY5b35J6weckB36"));
 
+builder.Services.AddScoped<ApiClient>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

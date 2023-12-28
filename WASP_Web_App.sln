@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WASP_Web_App", "WASP_Web_App\WASP_Web_App.csproj", "{79DD853A-BF4B-446C-8F2A-08B01AADCA98}"
+	ProjectSection(ProjectDependencies) = postProject
+		{27D375B2-8CB9-4E7E-9E92-46D1809E70A4} = {27D375B2-8CB9-4E7E-9E92-46D1809E70A4}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WASP_API", "WASP_API\WASP_API.csproj", "{27D375B2-8CB9-4E7E-9E92-46D1809E70A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WASP_API", "WASP_API\WASP_API.csproj", "{27D375B2-8CB9-4E7E-9E92-46D1809E70A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
