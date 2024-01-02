@@ -9,6 +9,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddMvc();
 
+//builder.Services.AddDbContext<DBContext>(options =>
+//        options.UseNpgsql("Host=balarama.db.elephantsql.com;Port=5432;Database=kwhuxftu;User Id=kwhuxftu;Password=m2vos2b9Lq2F8XEIJfPBTYFXYY_hlUVO"));
 builder.Services.AddDbContext<DBContext>(options =>
         options.UseNpgsql("Host=cornelius.db.elephantsql.com;Port=5432;Database=hxsnsuxz;User Id=hxsnsuxz;Password=c1h7Y_Iw2lZNbolvfZY5b35J6weckB36"));
 

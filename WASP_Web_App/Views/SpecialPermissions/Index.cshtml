@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WASP_Web_App.Entities.SpecialPermissions>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Keys)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.From)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.To)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Keys.Room)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SpecialPermission_ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SpecialPermission_ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SpecialPermission_ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
