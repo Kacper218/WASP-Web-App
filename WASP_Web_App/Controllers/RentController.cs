@@ -98,6 +98,8 @@ namespace WASP_Web_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Rent_ID,User_ID,Key_ID,From,To")] Rent rent)
         {
+            rent.From = rent.From.ToUniversalTime();
+            rent.To = rent.To.ToUniversalTime();
             if (id != rent.Rent_ID)
             {
                 return NotFound();

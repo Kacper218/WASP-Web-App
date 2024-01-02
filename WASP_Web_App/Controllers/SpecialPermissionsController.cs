@@ -98,6 +98,8 @@ namespace WASP_Web_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SpecialPermission_ID,User_ID,Key_ID,From,To")] SpecialPermissions specialPermissions)
         {
+            specialPermissions.From = specialPermissions.From.ToUniversalTime();
+            specialPermissions.To = specialPermissions.To.ToUniversalTime();
             if (id != specialPermissions.SpecialPermission_ID)
             {
                 return NotFound();
