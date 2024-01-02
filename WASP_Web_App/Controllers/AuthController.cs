@@ -21,8 +21,7 @@ namespace WASP_Web_App.Controllers
         // GET: Auth
         public async Task<IActionResult> Index()
         {
-            var dBContext = _context.Auth.Include(a => a.Users);
-            return View(await dBContext.ToListAsync());
+            return View(await _context.Auth.ToListAsync());
         }
 
         // GET: Auth/Details/5
@@ -34,7 +33,6 @@ namespace WASP_Web_App.Controllers
             }
 
             var auth = await _context.Auth
-                .Include(a => a.Users)
                 .FirstOrDefaultAsync(m => m.User_ID == id);
             if (auth == null)
             {
@@ -47,7 +45,6 @@ namespace WASP_Web_App.Controllers
         // GET: Auth/Create
         public IActionResult Create()
         {
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name");
             return View();
         }
 
@@ -56,7 +53,7 @@ namespace WASP_Web_App.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("User_ID,Login,Password,")] Auth auth)
+        public async Task<IActionResult> Create([Bind("User_ID,Login,Password")] Auth auth)
         {
             if (ModelState.IsValid)
             {
@@ -64,15 +61,6 @@ namespace WASP_Web_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
-            }
-
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", auth.User_ID);
             return View(auth);
         }
 
@@ -89,7 +77,6 @@ namespace WASP_Web_App.Controllers
             {
                 return NotFound();
             }
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", auth.User_ID);
             return View(auth);
         }
 
@@ -125,7 +112,6 @@ namespace WASP_Web_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", auth.User_ID);
             return View(auth);
         }
 
@@ -138,7 +124,6 @@ namespace WASP_Web_App.Controllers
             }
 
             var auth = await _context.Auth
-                .Include(a => a.Users)
                 .FirstOrDefaultAsync(m => m.User_ID == id);
             if (auth == null)
             {

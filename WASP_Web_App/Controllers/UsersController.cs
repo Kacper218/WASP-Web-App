@@ -21,7 +21,8 @@ namespace WASP_Web_App.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            var dBContext = _context.Users.Include(u => u.Auth);
+            return View(await dBContext.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -33,6 +34,7 @@ namespace WASP_Web_App.Controllers
             }
 
             var users = await _context.Users
+                .Include(u => u.Auth)
                 .FirstOrDefaultAsync(m => m.User_ID == id);
             if (users == null)
             {
@@ -45,6 +47,7 @@ namespace WASP_Web_App.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login");
             return View();
         }
 
@@ -61,6 +64,7 @@ namespace WASP_Web_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", users.User_ID);
             return View(users);
         }
 
@@ -77,6 +81,7 @@ namespace WASP_Web_App.Controllers
             {
                 return NotFound();
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", users.User_ID);
             return View(users);
         }
 
@@ -112,6 +117,7 @@ namespace WASP_Web_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", users.User_ID);
             return View(users);
         }
 
@@ -124,6 +130,7 @@ namespace WASP_Web_App.Controllers
             }
 
             var users = await _context.Users
+                .Include(u => u.Auth)
                 .FirstOrDefaultAsync(m => m.User_ID == id);
             if (users == null)
             {

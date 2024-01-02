@@ -21,7 +21,7 @@ namespace WASP_Web_App.Controllers
         // GET: Rent
         public async Task<IActionResult> Index()
         {
-            var dBContext = _context.Rent.Include(r => r.Keys).Include(r => r.Users);
+            var dBContext = _context.Rent.Include(r => r.Auth).Include(r => r.Keys);
             return View(await dBContext.ToListAsync());
         }
 
@@ -34,8 +34,8 @@ namespace WASP_Web_App.Controllers
             }
 
             var rent = await _context.Rent
+                .Include(r => r.Auth)
                 .Include(r => r.Keys)
-                .Include(r => r.Users)
                 .FirstOrDefaultAsync(m => m.Rent_ID == id);
             if (rent == null)
             {
@@ -48,8 +48,8 @@ namespace WASP_Web_App.Controllers
         // GET: Rent/Create
         public IActionResult Create()
         {
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login");
             ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room");
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name");
             return View();
         }
 
@@ -68,8 +68,8 @@ namespace WASP_Web_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", rent.User_ID);
             ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", rent.Key_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", rent.User_ID);
             return View(rent);
         }
 
@@ -86,8 +86,8 @@ namespace WASP_Web_App.Controllers
             {
                 return NotFound();
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", rent.User_ID);
             ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", rent.Key_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", rent.User_ID);
             return View(rent);
         }
 
@@ -98,8 +98,6 @@ namespace WASP_Web_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Rent_ID,User_ID,Key_ID,From,To")] Rent rent)
         {
-            rent.From = rent.From.ToUniversalTime();
-            rent.To = rent.To.ToUniversalTime();
             if (id != rent.Rent_ID)
             {
                 return NotFound();
@@ -109,6 +107,8 @@ namespace WASP_Web_App.Controllers
             {
                 try
                 {
+                    rent.From = rent.From.ToUniversalTime();
+                    rent.To =rent.To.ToUniversalTime();
                     _context.Update(rent);
                     await _context.SaveChangesAsync();
                 }
@@ -125,8 +125,8 @@ namespace WASP_Web_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", rent.User_ID);
             ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", rent.Key_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", rent.User_ID);
             return View(rent);
         }
 
@@ -139,8 +139,8 @@ namespace WASP_Web_App.Controllers
             }
 
             var rent = await _context.Rent
+                .Include(r => r.Auth)
                 .Include(r => r.Keys)
-                .Include(r => r.Users)
                 .FirstOrDefaultAsync(m => m.Rent_ID == id);
             if (rent == null)
             {

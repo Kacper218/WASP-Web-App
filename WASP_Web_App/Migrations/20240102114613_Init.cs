@@ -13,6 +13,20 @@ namespace WASP_Web_App.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Auth",
+                columns: table => new
+                {
+                    User_ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Login = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Auth", x => x.User_ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Groups",
                 columns: table => new
                 {
@@ -42,14 +56,45 @@ namespace WASP_Web_App.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    User_ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    User_ID = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Surname = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.User_ID);
+                    table.ForeignKey(
+                        name: "FK_Users_Auth_User_ID",
+                        column: x => x.User_ID,
+                        principalTable: "Auth",
+                        principalColumn: "User_ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permissions",
+                columns: table => new
+                {
+                    Permission_ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    User_ID = table.Column<int>(type: "integer", nullable: false),
+                    Group_ID = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissions", x => x.Permission_ID);
+                    table.ForeignKey(
+                        name: "FK_Permissions_Auth_User_ID",
+                        column: x => x.User_ID,
+                        principalTable: "Auth",
+                        principalColumn: "User_ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Permissions_Groups_Group_ID",
+                        column: x => x.Group_ID,
+                        principalTable: "Groups",
+                        principalColumn: "Group_ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,51 +124,6 @@ namespace WASP_Web_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Auth",
-                columns: table => new
-                {
-                    User_ID = table.Column<int>(type: "integer", nullable: false),
-                    Login = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Auth", x => x.User_ID);
-                    table.ForeignKey(
-                        name: "FK_Auth_Users_User_ID",
-                        column: x => x.User_ID,
-                        principalTable: "Users",
-                        principalColumn: "User_ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Permissions",
-                columns: table => new
-                {
-                    Permission_ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    User_ID = table.Column<int>(type: "integer", nullable: false),
-                    Group_ID = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Permissions", x => x.Permission_ID);
-                    table.ForeignKey(
-                        name: "FK_Permissions_Groups_Group_ID",
-                        column: x => x.Group_ID,
-                        principalTable: "Groups",
-                        principalColumn: "Group_ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Permissions_Users_User_ID",
-                        column: x => x.User_ID,
-                        principalTable: "Users",
-                        principalColumn: "User_ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rent",
                 columns: table => new
                 {
@@ -138,16 +138,16 @@ namespace WASP_Web_App.Migrations
                 {
                     table.PrimaryKey("PK_Rent", x => x.Rent_ID);
                     table.ForeignKey(
+                        name: "FK_Rent_Auth_User_ID",
+                        column: x => x.User_ID,
+                        principalTable: "Auth",
+                        principalColumn: "User_ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Rent_Keys_Key_ID",
                         column: x => x.Key_ID,
                         principalTable: "Keys",
                         principalColumn: "Key_ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Rent_Users_User_ID",
-                        column: x => x.User_ID,
-                        principalTable: "Users",
-                        principalColumn: "User_ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -166,16 +166,16 @@ namespace WASP_Web_App.Migrations
                 {
                     table.PrimaryKey("PK_SpecialPermissions", x => x.SpecialPermission_ID);
                     table.ForeignKey(
+                        name: "FK_SpecialPermissions_Auth_User_ID",
+                        column: x => x.User_ID,
+                        principalTable: "Auth",
+                        principalColumn: "User_ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_SpecialPermissions_Keys_Key_ID",
                         column: x => x.Key_ID,
                         principalTable: "Keys",
                         principalColumn: "Key_ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SpecialPermissions_Users_User_ID",
-                        column: x => x.User_ID,
-                        principalTable: "Users",
-                        principalColumn: "User_ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -224,9 +224,6 @@ namespace WASP_Web_App.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Auth");
-
-            migrationBuilder.DropTable(
                 name: "GroupKeys");
 
             migrationBuilder.DropTable(
@@ -239,13 +236,16 @@ namespace WASP_Web_App.Migrations
                 name: "SpecialPermissions");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Groups");
 
             migrationBuilder.DropTable(
                 name: "Keys");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Auth");
         }
     }
 }

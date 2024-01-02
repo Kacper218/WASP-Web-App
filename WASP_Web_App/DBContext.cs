@@ -27,66 +27,61 @@ namespace WASP_Web_App
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<Auth>()
+            //.HasOne(e => e.Users)
+            //.WithOne(e => e.Auth)
+            //.HasForeignKey<Users>(e => e.User_ID);
 
             modelBuilder.Entity<Users>()
             .HasOne(e => e.Auth)
             .WithOne(e => e.Users)
-            .HasForeignKey<Auth>(e => e.User_ID);
-
-            modelBuilder.Entity<Users>()
-            .HasMany(e => e.Permissions)
-            .WithOne(e => e.Users)
-            .HasForeignKey(e => e.User_ID);
-
-            modelBuilder.Entity<Users>()
-            .HasMany(e => e.SpecialPermissions)
-            .WithOne(e => e.Users)
-            .HasForeignKey(e => e.User_ID);
-
-            modelBuilder.Entity<Users>()
-            .HasMany(e => e.Rent)
-            .WithOne(e => e.Users)
-            .HasForeignKey(e => e.User_ID);
-
-
-
-            modelBuilder.Entity<Keys>()
-            .HasMany(e => e.GroupKeys)
-            .WithOne(e => e.Keys)
-            .HasForeignKey(e => e.Key_ID);
-
-            modelBuilder.Entity<Keys>()
-            .HasMany(e => e.SpecialPermissions)
-            .WithOne(e => e.Keys)
-            .HasForeignKey(e => e.Key_ID);
-
-            modelBuilder.Entity<Keys>()
-            .HasMany(e => e.Rent)
-            .WithOne(e => e.Keys)
-            .HasForeignKey(e => e.Key_ID);
-
-
-
-            modelBuilder.Entity<Groups>()
-            .HasMany(e => e.GroupKeys)
-            .WithOne(e => e.Groups)
-            .HasForeignKey(e => e.Group_ID);
-
-            modelBuilder.Entity<Groups>()
-            .HasMany(e => e.Permissions)
-            .WithOne(e => e.Groups)
-            .HasForeignKey(e => e.Group_ID);
-
-
+            .HasForeignKey<Users>(e => e.User_ID);
 
 
             modelBuilder.Entity<Auth>()
-            .HasOne(e => e.Users)
+            .HasMany(e => e.Permissions)
             .WithOne(e => e.Auth)
-            .HasForeignKey<Auth>(e => e.User_ID);
+            .HasForeignKey(e => e.User_ID);
+
+            modelBuilder.Entity<Auth>()
+            .HasMany(e => e.SpecialPermissions)
+            .WithOne(e => e.Auth)
+            .HasForeignKey(e => e.User_ID);
+
+            modelBuilder.Entity<Auth>()
+            .HasMany(e => e.Rent)
+            .WithOne(e => e.Auth)
+            .HasForeignKey(e => e.User_ID);
 
 
+
+            modelBuilder.Entity<Keys>()
+            .HasMany(e => e.GroupKeys)
+            .WithOne(e => e.Keys)
+            .HasForeignKey(e => e.Key_ID);
+
+            modelBuilder.Entity<Keys>()
+            .HasMany(e => e.SpecialPermissions)
+            .WithOne(e => e.Keys)
+            .HasForeignKey(e => e.Key_ID);
+
+            modelBuilder.Entity<Keys>()
+            .HasMany(e => e.Rent)
+            .WithOne(e => e.Keys)
+            .HasForeignKey(e => e.Key_ID);
+
+
+
+            modelBuilder.Entity<Groups>()
+            .HasMany(e => e.GroupKeys)
+            .WithOne(e => e.Groups)
+            .HasForeignKey(e => e.Group_ID);
+
+            modelBuilder.Entity<Groups>()
+            .HasMany(e => e.Permissions)
+            .WithOne(e => e.Groups)
+            .HasForeignKey(e => e.Group_ID);
 
             modelBuilder.Entity<GroupKeys>()
             .HasOne(e => e.Groups)
@@ -101,7 +96,7 @@ namespace WASP_Web_App
 
 
             modelBuilder.Entity<Permissions>()
-           .HasOne(e => e.Users)
+           .HasOne(e => e.Auth)
            .WithMany(e => e.Permissions)
            .HasForeignKey(e => e.User_ID);
 
@@ -113,7 +108,7 @@ namespace WASP_Web_App
 
 
             modelBuilder.Entity<Rent>()
-           .HasOne(e => e.Users)
+           .HasOne(e => e.Auth)
            .WithMany(e => e.Rent)
            .HasForeignKey(e => e.User_ID);
 
@@ -123,11 +118,12 @@ namespace WASP_Web_App
            .HasForeignKey(e => e.Key_ID);
 
 
+
             modelBuilder.Entity<SpecialPermissions>()
-            .HasOne(e => e.Users)
+            .HasOne(e => e.Auth)
             .WithMany(e => e.SpecialPermissions)
             .HasForeignKey(e => e.User_ID);
-            
+
             modelBuilder.Entity<SpecialPermissions>()
            .HasOne(e => e.Keys)
            .WithMany(e => e.SpecialPermissions)

@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WASP_Web_App;
 using WASP_Web_App.Entities;
 
-namespace WASP_Web_App.Views
+namespace WASP_Web_App.Controllers
 {
     public class GroupKeysController : Controller
     {

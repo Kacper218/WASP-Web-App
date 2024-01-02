@@ -25,7 +25,10 @@ namespace WASP_Web_App.Migrations
             modelBuilder.Entity("WASP_Web_App.Entities.Auth", b =>
                 {
                     b.Property<int>("User_ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("User_ID"));
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -185,10 +188,7 @@ namespace WASP_Web_App.Migrations
             modelBuilder.Entity("WASP_Web_App.Entities.Users", b =>
                 {
                     b.Property<int>("User_ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("User_ID"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -203,17 +203,6 @@ namespace WASP_Web_App.Migrations
                     b.HasKey("User_ID");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("WASP_Web_App.Entities.Auth", b =>
-                {
-                    b.HasOne("WASP_Web_App.Entities.Users", "Users")
-                        .WithOne("Auth")
-                        .HasForeignKey("WASP_Web_App.Entities.Auth", "User_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("WASP_Web_App.Entities.GroupKeys", b =>
@@ -243,15 +232,15 @@ namespace WASP_Web_App.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WASP_Web_App.Entities.Users", "Users")
+                    b.HasOne("WASP_Web_App.Entities.Auth", "Auth")
                         .WithMany("Permissions")
                         .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Groups");
+                    b.Navigation("Auth");
 
-                    b.Navigation("Users");
+                    b.Navigation("Groups");
                 });
 
             modelBuilder.Entity("WASP_Web_App.Entities.Rent", b =>
@@ -262,15 +251,15 @@ namespace WASP_Web_App.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WASP_Web_App.Entities.Users", "Users")
+                    b.HasOne("WASP_Web_App.Entities.Auth", "Auth")
                         .WithMany("Rent")
                         .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Keys");
+                    b.Navigation("Auth");
 
-                    b.Navigation("Users");
+                    b.Navigation("Keys");
                 });
 
             modelBuilder.Entity("WASP_Web_App.Entities.SpecialPermissions", b =>
@@ -281,13 +270,35 @@ namespace WASP_Web_App.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WASP_Web_App.Entities.Users", "Users")
+                    b.HasOne("WASP_Web_App.Entities.Auth", "Auth")
                         .WithMany("SpecialPermissions")
                         .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Auth");
+
                     b.Navigation("Keys");
+                });
+
+            modelBuilder.Entity("WASP_Web_App.Entities.Users", b =>
+                {
+                    b.HasOne("WASP_Web_App.Entities.Auth", "Auth")
+                        .WithOne("Users")
+                        .HasForeignKey("WASP_Web_App.Entities.Users", "User_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Auth");
+                });
+
+            modelBuilder.Entity("WASP_Web_App.Entities.Auth", b =>
+                {
+                    b.Navigation("Permissions");
+
+                    b.Navigation("Rent");
+
+                    b.Navigation("SpecialPermissions");
 
                     b.Navigation("Users");
                 });
@@ -302,17 +313,6 @@ namespace WASP_Web_App.Migrations
             modelBuilder.Entity("WASP_Web_App.Entities.Keys", b =>
                 {
                     b.Navigation("GroupKeys");
-
-                    b.Navigation("Rent");
-
-                    b.Navigation("SpecialPermissions");
-                });
-
-            modelBuilder.Entity("WASP_Web_App.Entities.Users", b =>
-                {
-                    b.Navigation("Auth");
-
-                    b.Navigation("Permissions");
 
                     b.Navigation("Rent");
 

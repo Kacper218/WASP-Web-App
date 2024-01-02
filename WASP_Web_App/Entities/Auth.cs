@@ -7,7 +7,7 @@ namespace WASP_Web_App.Entities
     public class Auth
     {
         [Key, Required]
-        public int User_ID { get; set; }
+        public required int User_ID { get; set; }
 
         [Required, StringLength(50)]
         public required string Login { get; set; }
@@ -16,8 +16,10 @@ namespace WASP_Web_App.Entities
         public required string Password { get; set; }
 
 
-       // [ForeignKey("UserId")]
         public virtual  Users? Users { get; set; }
+        public ICollection<Permissions>? Permissions { get; } = new List<Permissions>();
+        public ICollection<SpecialPermissions>? SpecialPermissions { get; } = new List<SpecialPermissions>();
+        public ICollection<Rent>? Rent { get; } = new List<Rent>();
 
 
         //+RFID

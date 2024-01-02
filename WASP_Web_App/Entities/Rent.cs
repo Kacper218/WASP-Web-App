@@ -19,8 +19,8 @@ namespace WASP_Web_App.Entities
         public DateTime To { get; set; }
 
 
-       // [ForeignKey("User_ID")]
-        public virtual Users? Users { get; set; }
+        [ForeignKey("User_ID")]
+        public virtual Auth? Auth { get; set; }
        // [ForeignKey("Key_ID")]
         public virtual Keys? Keys { get; set; }
     }

@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WASP_Web_App;
 using WASP_Web_App.Entities;
 
-namespace WASP_Web_App.Views
+namespace WASP_Web_App.Controllers
 {
     public class PermissionsController : Controller
     {
@@ -22,7 +21,7 @@ namespace WASP_Web_App.Views
         // GET: Permissions
         public async Task<IActionResult> Index()
         {
-            var dBContext = _context.Permissions.Include(p => p.Groups).Include(p => p.Users);
+            var dBContext = _context.Permissions.Include(p => p.Auth).Include(p => p.Groups);
             return View(await dBContext.ToListAsync());
         }
 
@@ -35,8 +34,8 @@ namespace WASP_Web_App.Views
             }
 
             var permissions = await _context.Permissions
+                .Include(p => p.Auth)
                 .Include(p => p.Groups)
-                .Include(p => p.Users)
                 .FirstOrDefaultAsync(m => m.Permission_ID == id);
             if (permissions == null)
             {
@@ -49,8 +48,8 @@ namespace WASP_Web_App.Views
         // GET: Permissions/Create
         public IActionResult Create()
         {
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login");
             ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name");
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name");
             return View();
         }
 
@@ -67,8 +66,8 @@ namespace WASP_Web_App.Views
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", permissions.User_ID);
             ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", permissions.Group_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", permissions.User_ID);
             return View(permissions);
         }
 
@@ -85,8 +84,8 @@ namespace WASP_Web_App.Views
             {
                 return NotFound();
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", permissions.User_ID);
             ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", permissions.Group_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", permissions.User_ID);
             return View(permissions);
         }
 
@@ -122,8 +121,8 @@ namespace WASP_Web_App.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", permissions.User_ID);
             ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", permissions.Group_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", permissions.User_ID);
             return View(permissions);
         }
 
@@ -136,8 +135,8 @@ namespace WASP_Web_App.Views
             }
 
             var permissions = await _context.Permissions
+                .Include(p => p.Auth)
                 .Include(p => p.Groups)
-                .Include(p => p.Users)
                 .FirstOrDefaultAsync(m => m.Permission_ID == id);
             if (permissions == null)
             {

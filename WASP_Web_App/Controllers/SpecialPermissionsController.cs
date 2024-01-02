@@ -21,7 +21,7 @@ namespace WASP_Web_App.Controllers
         // GET: SpecialPermissions
         public async Task<IActionResult> Index()
         {
-            var dBContext = _context.SpecialPermissions.Include(s => s.Keys).Include(s => s.Users);
+            var dBContext = _context.SpecialPermissions.Include(s => s.Auth).Include(s => s.Keys);
             return View(await dBContext.ToListAsync());
         }
 
@@ -34,8 +34,8 @@ namespace WASP_Web_App.Controllers
             }
 
             var specialPermissions = await _context.SpecialPermissions
+                .Include(s => s.Auth)
                 .Include(s => s.Keys)
-                .Include(s => s.Users)
                 .FirstOrDefaultAsync(m => m.SpecialPermission_ID == id);
             if (specialPermissions == null)
             {
@@ -48,8 +48,8 @@ namespace WASP_Web_App.Controllers
         // GET: SpecialPermissions/Create
         public IActionResult Create()
         {
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login");
             ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room");
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name");
             return View();
         }
 
@@ -68,8 +68,8 @@ namespace WASP_Web_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", specialPermissions.User_ID);
             ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", specialPermissions.Key_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", specialPermissions.User_ID);
             return View(specialPermissions);
         }
 
@@ -86,8 +86,8 @@ namespace WASP_Web_App.Controllers
             {
                 return NotFound();
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", specialPermissions.User_ID);
             ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", specialPermissions.Key_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", specialPermissions.User_ID);
             return View(specialPermissions);
         }
 
@@ -98,8 +98,6 @@ namespace WASP_Web_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SpecialPermission_ID,User_ID,Key_ID,From,To")] SpecialPermissions specialPermissions)
         {
-            specialPermissions.From = specialPermissions.From.ToUniversalTime();
-            specialPermissions.To = specialPermissions.To.ToUniversalTime();
             if (id != specialPermissions.SpecialPermission_ID)
             {
                 return NotFound();
@@ -109,6 +107,8 @@ namespace WASP_Web_App.Controllers
             {
                 try
                 {
+                    specialPermissions.From = specialPermissions.From.ToUniversalTime();
+                    specialPermissions.To = specialPermissions.To.ToUniversalTime();
                     _context.Update(specialPermissions);
                     await _context.SaveChangesAsync();
                 }
@@ -125,8 +125,8 @@ namespace WASP_Web_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", specialPermissions.User_ID);
             ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", specialPermissions.Key_ID);
-            ViewData["User_ID"] = new SelectList(_context.Users, "User_ID", "Name", specialPermissions.User_ID);
             return View(specialPermissions);
         }
 
@@ -139,8 +139,8 @@ namespace WASP_Web_App.Controllers
             }
 
             var specialPermissions = await _context.SpecialPermissions
+                .Include(s => s.Auth)
                 .Include(s => s.Keys)
-                .Include(s => s.Users)
                 .FirstOrDefaultAsync(m => m.SpecialPermission_ID == id);
             if (specialPermissions == null)
             {
