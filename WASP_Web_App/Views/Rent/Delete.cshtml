@@ -12,6 +12,30 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.User_ID)
+        </dt>
+        <dt class="col-sm-2">
+            @Html.DisplayFor(model => model.User_ID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayNameFor(model => model.Auth.Login)
+        </dd>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Auth.Login)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Key_ID)
+        </dt>
+        <dt class="col-sm-2">
+            @Html.DisplayFor(model => model.Key_ID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayNameFor(model => model.Keys.Room)
+        </dd>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Keys.Room)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.From)
         </dt>
         <dd class = "col-sm-10">
@@ -22,18 +46,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.To)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Auth)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Auth.Login)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Keys)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Keys.Room)
         </dd>
     </dl>
     

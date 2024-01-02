@@ -13,10 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Auth)
+                @Html.DisplayNameFor(model => model.User_ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Groups)
+                @Html.DisplayNameFor(model => model.Auth.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Groups.Name)
             </th>
             <th></th>
         </tr>
@@ -25,7 +31,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.User_ID)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Auth.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group_ID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Groups.Name)

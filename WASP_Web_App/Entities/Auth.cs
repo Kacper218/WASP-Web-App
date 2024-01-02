@@ -16,7 +16,7 @@ namespace WASP_Web_App.Entities
         public required string Password { get; set; }
 
 
-        public virtual  Users? Users { get; set; }
+        public virtual Users? Users { get; set; }
         public ICollection<Permissions>? Permissions { get; } = new List<Permissions>();
         public ICollection<SpecialPermissions>? SpecialPermissions { get; } = new List<SpecialPermissions>();
         public ICollection<Rent>? Rent { get; } = new List<Rent>();
