@@ -62,6 +62,8 @@ namespace WASP_Web_App.Controllers
         {
             if (ModelState.IsValid)
             {
+                specialPermissions.From = specialPermissions.From.ToUniversalTime();
+                specialPermissions.To = specialPermissions.To.ToUniversalTime();
                 _context.Add(specialPermissions);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

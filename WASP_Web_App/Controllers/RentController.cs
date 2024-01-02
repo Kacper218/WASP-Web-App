@@ -62,6 +62,8 @@ namespace WASP_Web_App.Controllers
         {
             if (ModelState.IsValid)
             {
+                rent.From = rent.From.ToUniversalTime();
+                rent.To = rent.To.ToUniversalTime();
                 _context.Add(rent);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
