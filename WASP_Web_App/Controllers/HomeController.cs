@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WASP_Web_App.Entities;
 using WASP_Web_App.Models;
@@ -18,38 +19,32 @@ namespace WASP_Web_App.Controllers
             _apiClient = apiClient;
             _passwordHasher = new PasswordHasher<Auth>();
         }
-
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
+        {
+            return View();
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(Auth model)
         {
             try
             {
-                Auth Karol = new Auth
-                {
-                    Login = "Benek",
-                    Password = "sianosiano",
-                    User_ID = 0
-                };
-                ////password hashing here
-                //var hashedPassword = _passwordHasher.HashPassword(Karol, Karol.Password);
-                //Karol.Password = hashedPassword;
-                string authData = await _apiClient.GetLoginInfo(Karol);
-                Console.WriteLine("HASLO TU: {0}", Karol.Password);
-                _logger.LogInformation("Karol git: {AuthData}", authData);
-
-                // Process weatherData or pass it to the view
-
+                string authData = await _apiClient.GetLoginInfo(model);
                 ViewData["AuthData"] = authData;
 
-                return View();
-
+                return View(model);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Blad fetchowania");
-                return View();
+                return RedirectToAction(nameof(Index));
             }
-
         }
+
         public IActionResult Privacy()
         {
             return View();
