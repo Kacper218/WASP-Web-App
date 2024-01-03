@@ -12,7 +12,7 @@ namespace WASP_Web_App.Entities
         [Required, StringLength(50)]
         public required string Login { get; set; }
 
-        [Required, StringLength(50)]
+        [Required]
         public required string Password { get; set; }
 
 

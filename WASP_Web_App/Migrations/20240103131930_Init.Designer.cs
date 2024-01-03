@@ -12,7 +12,7 @@ using WASP_Web_App;
 namespace WASP_Web_App.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20240102114613_Init")]
+    [Migration("20240103131930_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -40,8 +40,7 @@ namespace WASP_Web_App.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.HasKey("User_ID");
 
