@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WASP_Web_App.Entities;
+using WASP_Web_App.Controllers;
+using Microsoft.AspNetCore.Identity;
 
 namespace WASP_Web_App.Controllers
 {
     public class AuthController : Controller
     {
         private readonly DBContext _context;
-
+        private readonly PasswordHasher<Auth> _passwordHasher;
         public AuthController(DBContext context)
         {
             _context = context;
+            _passwordHasher = new PasswordHasher<Auth>();
         }
 
         // GET: Auth
@@ -57,6 +61,9 @@ namespace WASP_Web_App.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                var hashedPassword = _passwordHasher.HashPassword(auth, auth.Password);
+                auth.Password = hashedPassword;
                 _context.Add(auth);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
