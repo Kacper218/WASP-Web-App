@@ -61,9 +61,10 @@ namespace WASP_Web_App.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                //password hashing here
                 var hashedPassword = _passwordHasher.HashPassword(auth, auth.Password);
                 auth.Password = hashedPassword;
+
                 _context.Add(auth);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -103,6 +104,9 @@ namespace WASP_Web_App.Controllers
             {
                 try
                 {
+                    //password hashing here
+                    var hashedPassword = _passwordHasher.HashPassword(auth, auth.Password);
+                    auth.Password = hashedPassword;
                     _context.Update(auth);
                     await _context.SaveChangesAsync();
                 }

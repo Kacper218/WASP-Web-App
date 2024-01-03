@@ -17,18 +17,11 @@ namespace WASP_Web_App
             _httpClient.BaseAddress = new Uri("https://localhost:7155"); // Replace with your API base URL
         }
 
-        public async Task<string> GetLoginInfo()
+        public async Task<string> GetLoginInfo(Auth user)
         {
             try
             {
-                var firstAuth = new Auth
-                {
-                    Login = "Karol",
-                    Password = "admin1",
-                    User_ID = 1
-                };
-            
-                JsonContent content = JsonContent.Create(firstAuth);
+                JsonContent content = JsonContent.Create(user);
 
                 var response = await _httpClient.PostAsync("/Auth", content);
             
