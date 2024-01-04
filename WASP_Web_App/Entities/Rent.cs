@@ -21,7 +21,8 @@ namespace WASP_Web_App.Entities
 
         [ForeignKey("User_ID")]
         public virtual Auth? Auth { get; set; }
-       // [ForeignKey("Key_ID")]
+       
+        [ForeignKey("Key_ID")]
         public virtual Keys? Keys { get; set; }
     }
 }

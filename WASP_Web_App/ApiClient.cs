@@ -14,7 +14,7 @@ namespace WASP_Web_App
         public ApiClient()
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:7155"); // Replace with your API base URL
+            _httpClient.BaseAddress = new Uri("https://localhost:7155");
         }
 
         public async Task<string> GetLoginInfo(Auth user)

@@ -16,10 +16,10 @@ namespace WASP_Web_App.Entities
         public required int Group_ID { get; set; }
 
 
-        //[ForeignKey("Key_ID")]
+        [ForeignKey("Key_ID")]
         public virtual Keys? Keys { get; set; }
 
-       // [ForeignKey("Group_ID")]
+        [ForeignKey("Group_ID")]
         public virtual Groups? Groups { get; set; }
     }
 }

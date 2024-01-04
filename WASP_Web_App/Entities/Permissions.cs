@@ -18,7 +18,8 @@ namespace WASP_Web_App.Entities
 
         [ForeignKey("User_ID")]
         public virtual Auth? Auth { get; set; }
-       /// [ForeignKey("Group_ID")]
+       
+        [ForeignKey("Group_ID")]
         public virtual Groups? Groups { get; set; }
     }
 }
