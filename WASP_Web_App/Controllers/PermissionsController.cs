@@ -48,8 +48,8 @@ namespace WASP_Web_App.Controllers
         // GET: Permissions/Create
         public IActionResult Create()
         {
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login");
-            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name");
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID");
+            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Group_ID");
             return View();
         }
 
@@ -66,8 +66,8 @@ namespace WASP_Web_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", permissions.User_ID);
-            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", permissions.Group_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", permissions.User_ID);
+            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Group_ID", permissions.Group_ID);
             return View(permissions);
         }
 
@@ -84,8 +84,8 @@ namespace WASP_Web_App.Controllers
             {
                 return NotFound();
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", permissions.User_ID);
-            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", permissions.Group_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", permissions.User_ID);
+            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Group_ID", permissions.Group_ID);
             return View(permissions);
         }
 
@@ -121,8 +121,8 @@ namespace WASP_Web_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", permissions.User_ID);
-            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", permissions.Group_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", permissions.User_ID);
+            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Group_ID", permissions.Group_ID);
             return View(permissions);
         }
 

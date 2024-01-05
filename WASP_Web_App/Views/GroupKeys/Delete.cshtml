@@ -11,16 +11,28 @@
     <h4>GroupKeys</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Keys)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Key_ID)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Key_ID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Keys.Room)
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Keys.Room)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Groups)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Group_ID)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Group_ID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Groups.Name)
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Groups.Name)
         </dd>
     </dl>

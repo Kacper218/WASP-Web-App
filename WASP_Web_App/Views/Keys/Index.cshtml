@@ -24,9 +24,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-           <th>
-               @Html.DisplayNameFor(model => model.Key_ID)
-               </th>
+           <td>
+               @Html.DisplayFor(model => item.Key_ID)
+               </td>
            <td>
                 @Html.DisplayFor(modelItem => item.Room)
             </td>

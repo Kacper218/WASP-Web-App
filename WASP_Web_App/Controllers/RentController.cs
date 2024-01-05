@@ -48,8 +48,8 @@ namespace WASP_Web_App.Controllers
         // GET: Rent/Create
         public IActionResult Create()
         {
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login");
-            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room");
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID");
+            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Key_ID");
             return View();
         }
 
@@ -68,8 +68,8 @@ namespace WASP_Web_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", rent.User_ID);
-            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", rent.Key_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", rent.User_ID);
+            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Key_ID", rent.Key_ID);
             return View(rent);
         }
 
@@ -86,8 +86,8 @@ namespace WASP_Web_App.Controllers
             {
                 return NotFound();
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", rent.User_ID);
-            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", rent.Key_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", rent.User_ID);
+            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Key_ID", rent.Key_ID);
             return View(rent);
         }
 
@@ -125,8 +125,8 @@ namespace WASP_Web_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", rent.User_ID);
-            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", rent.Key_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", rent.User_ID);
+            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Key_ID", rent.Key_ID);
             return View(rent);
         }
 

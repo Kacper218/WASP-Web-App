@@ -48,8 +48,8 @@ namespace WASP_Web_App.Controllers
         // GET: GroupKeys/Create
         public IActionResult Create()
         {
-            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name");
-            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room");
+            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Group_ID");
+            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Key_ID");
             return View();
         }
 
@@ -66,8 +66,8 @@ namespace WASP_Web_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", groupKeys.Group_ID);
-            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", groupKeys.Key_ID);
+            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Group_ID", groupKeys.Group_ID);
+            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Key_ID", groupKeys.Key_ID);
             return View(groupKeys);
         }
 
@@ -84,8 +84,8 @@ namespace WASP_Web_App.Controllers
             {
                 return NotFound();
             }
-            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", groupKeys.Group_ID);
-            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", groupKeys.Key_ID);
+            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Group_ID", groupKeys.Group_ID);
+            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Key_ID", groupKeys.Key_ID);
             return View(groupKeys);
         }
 
@@ -121,8 +121,8 @@ namespace WASP_Web_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Name", groupKeys.Group_ID);
-            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Room", groupKeys.Key_ID);
+            ViewData["Group_ID"] = new SelectList(_context.Groups, "Group_ID", "Group_ID", groupKeys.Group_ID);
+            ViewData["Key_ID"] = new SelectList(_context.Keys, "Key_ID", "Key_ID", groupKeys.Key_ID);
             return View(groupKeys);
         }
 

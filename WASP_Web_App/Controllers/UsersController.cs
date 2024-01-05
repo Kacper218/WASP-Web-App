@@ -47,7 +47,7 @@ namespace WASP_Web_App.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login");
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WASP_Web_App.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", users.User_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", users.User_ID);
             return View(users);
         }
 
@@ -81,7 +81,7 @@ namespace WASP_Web_App.Controllers
             {
                 return NotFound();
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", users.User_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", users.User_ID);
             return View(users);
         }
 
@@ -117,7 +117,7 @@ namespace WASP_Web_App.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "Login", users.User_ID);
+            ViewData["User_ID"] = new SelectList(_context.Auth, "User_ID", "User_ID", users.User_ID);
             return View(users);
         }
 
